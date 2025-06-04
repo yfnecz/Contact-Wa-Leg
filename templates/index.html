@@ -1,0 +1,150 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>Find Your State Representative</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='site.css') }}">
+    <style>
+      .autocomplete-suggestions {
+        border: 1px solid #ccc;
+        max-height: 150px;
+        overflow-y: auto;
+        background: #fff;
+        position: absolute;
+        z-index: 1000;
+        width: 300px;
+      }
+      .autocomplete-suggestion {
+        padding: 8px;
+        cursor: pointer;
+      }
+      .autocomplete-suggestion:hover {
+        background: #f0f0f0;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <h1>Find Your State Representative</h1>
+      <form method="post" action="/">
+        <label for="name">Your Name:</label><br>
+        <input type="text" id="name" name="name" required><br><br>
+        <label for="address">Your Address:</label><br>
+        <input type="text" id="address" name="address" autocomplete="off" required style="width:300px;"><br>
+        <!-- Hidden fields for address parts -->
+        <input type="hidden" id="street_number" name="street_number">
+        <input type="hidden" id="route" name="route">
+        <input type="hidden" id="locality" name="locality">
+        <input type="hidden" id="administrative_area_level_1" name="administrative_area_level_1">
+        <input type="hidden" id="postal_code" name="postal_code">
+        <input type="hidden" id="lat" name="lat">
+        <input type="hidden" id="lng" name="lng">
+        <br>
+        <button type="submit">Search</button>
+      </form>
+    </div>
+    <script src="https://maps.googleapis.com/maps/api/js?key={{ google_api_key }}&libraries=places"></script>
+    <script>
+  function initAutocomplete() {
+    const addressInput = document.getElementById('address');
+    const autocomplete = new google.maps.places.Autocomplete(addressInput, {
+      types: ['address'],
+      componentRestrictions: { country: 'us' }
+    });
+
+    // Optional: handle place selection
+    autocomplete.addListener('place_changed', function() {
+      const place = autocomplete.getPlace();
+      // Clear previous values
+      document.getElementById('street_number').value = '';
+      document.getElementById('route').value = '';
+      document.getElementById('locality').value = '';
+      document.getElementById('administrative_area_level_1').value = '';
+      document.getElementById('postal_code').value = '';
+      document.getElementById('lat').value = '';
+      document.getElementById('lng').value = '';
+      // Fill with new values
+      place.address_components.forEach(component => {
+        if (component.types.includes('street_number')) {
+          document.getElementById('street_number').value = component.long_name;
+        }
+        if (component.types.includes('route')) {
+          document.getElementById('route').value = component.long_name;
+        }
+        if (component.types.includes('locality')) {
+          document.getElementById('locality').value = component.long_name;
+        }
+        if (component.types.includes('administrative_area_level_1')) {
+          document.getElementById('administrative_area_level_1').value = component.short_name;
+        }
+        if (component.types.includes('postal_code')) {
+          document.getElementById('postal_code').value = component.long_name;
+        }
+      });
+      // Set lat/lng if available
+      if (place.geometry && place.geometry.location) {
+        document.getElementById('lat').value = place.geometry.location.lat();
+        document.getElementById('lng').value = place.geometry.location.lng();
+      }
+    });
+  }
+
+  // Initialize autocomplete after the page loads
+  window.addEventListener('DOMContentLoaded', initAutocomplete);
+
+  document.querySelector('form').addEventListener('submit', function(e) {
+  const streetNumber = document.getElementById('street_number').value;
+  const route = document.getElementById('route').value;
+  const locality = document.getElementById('locality').value;
+  const state = document.getElementById('administrative_area_level_1').value;
+  const postalCode = document.getElementById('postal_code').value;
+  const address = document.getElementById('address').value;
+
+  // If any field is missing, try to geocode
+  if (!streetNumber || !route || !locality || !state || !postalCode) {
+    e.preventDefault(); // Stop form for now
+
+    fetch(`https://maps.googleapis.com/maps/api/geocode/json?address=${encodeURIComponent(address)}&key={{ geo_api_key }}`)
+      .then(response => response.json())
+      .then(data => {
+        if (data.status === "OK" && data.results.length > 0) {
+          const components = data.results[0].address_components;
+          // Fill hidden fields
+          components.forEach(component => {
+            if (component.types.includes('street_number')) {
+              document.getElementById('street_number').value = component.long_name;
+            }
+            if (component.types.includes('route')) {
+              document.getElementById('route').value = component.long_name;
+            }
+            if (
+              component.types.includes('locality') ||
+              component.types.includes('sublocality') ||
+              component.types.includes('postal_town') ||
+              component.types.includes('administrative_area_level_2')
+            ) {
+              document.getElementById('locality').value = component.long_name;
+            }
+            if (component.types.includes('administrative_area_level_1')) {
+              document.getElementById('administrative_area_level_1').value = component.short_name;
+            }
+            if (component.types.includes('postal_code')) {
+              document.getElementById('postal_code').value = component.long_name;
+            }
+          });
+          // Set lat/lng from geocoding result
+          const location = data.results[0].geometry.location;
+          document.getElementById('lat').value = location.lat;
+          document.getElementById('lng').value = location.lng;
+          // Submit the form again now that fields are filled
+          e.target.submit();
+        } else {
+          alert('Could not parse address. Please select from suggestions or enter a valid address.');
+        }
+      });
+  }
+  // else: allow normal submit
+});
+    </script>
+  </body>
+</html>

@@ -1,0 +1,25 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>Your Legislators</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='site.css') }}">
+  </head>
+  <body>
+    <div class="container">
+      <h1>Your Legislators</h1>
+      <p><strong>Name:</strong> {{ name }}</p>
+      <p><strong>Address:</strong> <input type="text" value="{{ address }}" readonly style="width:300px;"></p>
+      <h2>Legislators</h2>
+      <ul>
+        {% for legislator in legislators %}
+          <li>{{ legislator.name }} ({{ legislator.district }})</li>
+        {% endfor %}
+      </ul>
+      <h2>Message</h2>
+      <form>
+        <textarea rows="8" cols="60">{{ message }}</textarea>
+      </form>
+    </div>
+  </body>
+</html>
