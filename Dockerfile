@@ -18,7 +18,7 @@ RUN pip install --upgrade pip && pip install -r requirements.txt
 COPY . .
 
 # Expose port
-EXPOSE 5000
+EXPOSE 10000
 
 # Run the app
 CMD ["gunicorn", "-b", "0.0.0.0:10000", "app:app"]
