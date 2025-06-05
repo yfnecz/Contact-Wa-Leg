@@ -3,3 +3,4 @@ cohere
 geopandas
 shapely
 rtree
+gunicorn
