@@ -43,7 +43,6 @@ def results():
                 "index.html",
                 error="Please complete the CAPTCHA.",
                 google_api_key=maps_api_key,
-                geo_api_key=geo_api_key,
                 site_key=site_key
             )
         name = request.form.get("name")
@@ -76,14 +75,10 @@ def results():
                 max_tokens=500
             )
             response = response.text
-            db.cache_response(response)
+
         except Exception as e:
             print(f"Error calling Cohere API: {e}")
-            cached_response = db.get_random_cached_response()
-            if cached_response:
-                response = cached_response
-            else:
-                response = "An error occurred while generating the message."
+            response = "An error occurred while generating the message."
 
         message_body = response.strip()
         subject = "Message from Constituent"
