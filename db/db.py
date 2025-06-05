@@ -1,7 +1,9 @@
-import sqlite3
+import sqlite3, os
 
 class Database:
-    def __init__(self, db_path="ai_cache.db"):
+    def __init__(self, db_path=None):
+        if db_path is None:
+            db_path = os.environ.get("AI_CACHE_DB_PATH", "/data/ai_cache.db")
         self.db_path = db_path
         self._init_db()
 

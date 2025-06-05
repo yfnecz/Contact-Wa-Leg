@@ -1,9 +1,11 @@
-import geopandas as gpd
+import geopandas as gpd, os
 from shapely.geometry import Point
 
 class LegislativeDistrictLocator:
-    def __init__(self, shapefile_path):
+    def __init__(self, shapefile_path="LEG_AMEND_FINAL_GCS_NAD83.shp"):
         # Load the shapefile once during initialization
+        dir = os.path.dirname(__file__)
+        shapefile_path = os.path.join(dir, "Legislative", shapefile_path)
         self.districts = gpd.read_file(shapefile_path)
         
         # Convert to WGS84 if not already in lat/lon
