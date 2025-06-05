@@ -7,19 +7,57 @@
   </head>
   <body>
     <div class="container">
-      <h1>Your Legislators</h1>
-      <p><strong>Name:</strong> {{ name }}</p>
-      <p><strong>Address:</strong> <input type="text" value="{{ address }}" readonly style="width:300px;"></p>
-      <h2>Legislators</h2>
-      <ul>
+      <p><strong>Your Name:</strong> {{ name }}</p>
+      <p><strong>Address:</strong> {{ address }}</p>
+      <h1 class="results-header">Your Legislators</h1>
+      <p><strong>Legislative District:</strong> {{ district }}</p>
+      <ul class="legislator-list compact-list">
         {% for legislator in legislators %}
-          <li>{{ legislator.name }} ({{ legislator.district }})</li>
+          <li>
+            <span class="legislator-mini">
+              <strong>{{ legislator.name }}</strong> ({{ legislator.chamber }}, {{ legislator.party }})
+              <a href="mailto:{{ legislator.email }}">{{ legislator.email }}</a>
+              <a href="tel:{{ legislator.phone|replace(' ', '') }}">{{ legislator.phone }}</a>
+              {% if legislator.la %}
+                <br>
+                <span class="label">Legislative Assistant:</span> {{ legislator.la }}
+                {% if legislator.la_email %}
+                  <a href="mailto:{{ legislator.la_email }}">{{ legislator.la_email }}</a>
+                {% endif %}
+              {% endif %}
+              <br>
+              {# Mailto button #}
+              <button
+                type="button"
+                class="mailto-btn"
+                onclick='sendMailToLawmaker(
+                  {{ legislator.email|tojson }},
+                  {{ legislator.la_email|default('')|tojson }},
+                  {{ legislator.chamber|tojson }},
+                  {{ legislator.name|tojson }}
+                )'>Send below message to this lawmaker</button>
+            </span>
+          </li>
         {% endfor %}
       </ul>
+      <h2>Email Subject</h2>
+      <input type="text" id="email-subject" value="{{ subject }}" style="width:100%;margin-bottom:16px;">
       <h2>Message</h2>
-      <form>
-        <textarea rows="8" cols="60">{{ message }}</textarea>
-      </form>
+      <textarea id="email-message" rows="28" style="width:100%;font-size:1em;">{{ message }}</textarea>
     </div>
+    <script>
+function sendMailToLawmaker(email, laEmail, chamber, name) {
+    const subject = document.getElementById('email-subject').value;
+    const message = document.getElementById('email-message').value;
+    const greeting = chamber === "Senate" ? "Dear Senator" : "Dear Representative";
+    const body = `${greeting} ${name},\n\n${message}`;
+
+    let mailto = `mailto:${email}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+    if (laEmail && laEmail.trim() !== "") {
+        mailto += `&cc=${encodeURIComponent(laEmail)}`;
+    }
+    window.location.href = mailto;
+}
+</script>
   </body>
 </html>

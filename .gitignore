@@ -17,3 +17,9 @@ __pycache__/
 # Flask stuff:
 instance/
 .webassets-cache
+
+apikeys/ai.key
+apikeys/captcha-site.key
+apikeys/captcha.secret
+apikeys/geo-api.key
+apikeys/maps-api.key

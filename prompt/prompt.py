@@ -10,4 +10,5 @@ class Prompt:
         tones = ["urgent", "emotional", "calm but serious", "formal", "compassionate"]
         prompt = self.base_prompt + 'Each message must have a completely different *opening line* that does not resemble the structure or language of previous letters. Do not begin with “I am writing to you today with a heavy heart…” or anything close. Instead, vary tone, entry point, and sentence structure creatively while remaining appropriate and respectful.'
         prompt += f'Tone: {random.choice(tones)}'
+        prompt += 'Please generate an email subject line (start with "Subject:") as the first line, then the message body.'
         return prompt

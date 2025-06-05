@@ -1,2 +1,5 @@
 flask
 cohere
+geopandas
+shapely
+rtree

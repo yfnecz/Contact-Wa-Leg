@@ -1,56 +1,71 @@
 from flask import Flask, render_template, request, redirect, url_for
-import cohere
+import cohere, pandas as pd, requests
 from prompt import prompt
 from apikeys import api_keys
 from db import db
+from representatives import repr
 
 app = Flask(__name__)
 
 db = db.Database()
 base_prompt = prompt.Prompt()
 api = api_keys.api_keys()
-(ai_key, maps_api_key, geo_api_key) = api.get_keys()
+(ai_key, maps_api_key, geo_api_key, site_key, site_secret) = api.get_keys()
+# use wrong ai key for now
+ai_key='test'
+repr_get = repr.DistrictRepresentatives()
+
+def clean_legislators(legislators):
+    for leg in legislators:
+        for key in ['la', 'la_email', 'position']:
+            if pd.isna(leg.get(key)):
+                leg[key] = ''
+    return legislators
 
 @app.route("/", methods=["GET", "POST"])
 def index():
     if request.method == "POST":
+        recaptcha_response = request.form.get('g-recaptcha-response')
+        verify_url = "https://www.google.com/recaptcha/api/siteverify"
+        payload = {'secret': site_secret, 'response': recaptcha_response}
+        r = requests.post(verify_url, data=payload)
+        result = r.json()
+        if not result.get('success'):
+            return render_template("index.html", error="Please complete the CAPTCHA.", google_api_key=maps_api_key, geo_api_key=geo_api_key, site_key=site_key)
+
         name = request.form.get("name")
         address = request.form.get("address")
-        street_number = request.form.get("street_number")
-        route = request.form.get("route")
-        locality = request.form.get("locality")
-        administrative_area_level_1 = request.form.get("administrative_area_level_1")
-        postal_code = request.form.get("postal_code")
         lat = request.form.get("lat")
         lng = request.form.get("lng")
+        user_addition = request.form.get("user_addition", "")
+ 
         # For now, just pass all data to the results page
         return redirect(url_for(
             "results",
             name=name,
             address=address,
-            street_number=street_number,
-            route=route,
-            locality=locality,
-            state=administrative_area_level_1,
-            postal_code=postal_code,
             lat=lat,
-            lng=lng
+            lng=lng,
+            user_addition=user_addition
         ))
-    return render_template("index.html", google_api_key=maps_api_key, geo_api_key=geo_api_key)
+    return render_template("index.html", google_api_key=maps_api_key, geo_api_key=geo_api_key, site_key=site_key)
 
 
 @app.route("/results")
 def results():
-    # Dummy legislators
-    legislators = [
-        {"name": "Rep. Alice Smith", "district": "District 1"},
-        {"name": "Sen. Bob Johnson", "district": "District 1"}
-    ]
-
-    # name = request.args.get("name")
+    district_number = request.args.get("district") or "28"
+    representatives = repr_get.get_representatives(district_number)
+    representatives = clean_legislators(representatives)
+    name = request.args.get("name")
+    user_addition = request.args.get("user_addition", "")
     new_prompt = base_prompt.get_prompt()
+    if user_addition:
+        new_prompt += f"\n\nThe constituent adds: {user_addition.strip()}"
+    
+    new_prompt += f"\n\nThe constituent's name is {name.strip()}.\n\n"
 
     try:
+        db.increment_usage()
         co = cohere.Client(ai_key)
         response = co.chat(
             model="command-a-03-2025",
@@ -60,10 +75,8 @@ def results():
             k=40,
             max_tokens=500
         )
-        
         response = response.text
         db.cache_response(response)
-
     except Exception as e:
         print(f"Error calling Cohere API: {e}")
         cached_response = db.get_random_cached_response()
@@ -72,12 +85,22 @@ def results():
         else:
             response = "An error occurred while generating the message."
 
+    message_body = response.strip()
+    subject = "Message from Constituent"
+
+    if response.startswith("Subject:"):
+        subject, _, body = response.partition('\n')
+        subject = subject.replace("Subject:", "").strip()
+        message_body = body.strip()
+
     return render_template(
         "results.html",
-        name=request.args.get("name"),
+        name=name,
         address=request.args.get("address"),
-        legislators=legislators,
-        message=response
+        legislators=representatives,
+        subject=subject,
+        message=message_body,
+        district=district_number  # Pass district to template
     )
 
 
