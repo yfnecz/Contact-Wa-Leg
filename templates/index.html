@@ -37,6 +37,10 @@
         </div>
         <button type="submit" id="submit-btn" disabled>Preview Generated Message</button>
       </form>
+      <div id="loading-overlay" style="display: none;">
+        <div class="loading-spinner"></div>
+        <div class="loading-text">Generating your message...</div>
+      </div>
       <p id="address-error"></p>
     </div>
     <script src="https://maps.googleapis.com/maps/api/js?key={{ google_api_key }}&libraries=places"></script>
@@ -109,12 +113,45 @@ document.querySelector('form').addEventListener('submit', function(e) {
     document.getElementById('address-error').style.display = 'block';
     return;
   }
-  // else: allow normal submit
+
+  // If validation passes, show loading overlay
+  if (state === "WA" && lat && lng) {
+      document.getElementById('loading-overlay').style.display = 'flex';
+  }
 });
 
 function enableSubmit() {
   document.getElementById('submit-btn').disabled = false;
 }
+
+// Add this function to reset the form
+function resetForm() {
+    document.querySelector('form').reset();
+    document.getElementById('loading-overlay').style.display = 'none';
+    document.getElementById('submit-btn').disabled = true;
+    document.getElementById('address-error').style.display = 'none';
+    
+    // Clear hidden fields
+    ['street_number', 'route', 'locality', 'administrative_area_level_1', 
+     'postal_code', 'lat', 'lng'].forEach(id => {
+        document.getElementById(id).value = '';
+    });
+
+    // Reset reCAPTCHA
+    grecaptcha.reset();
+}
+
+// Add visibility change handler
+document.addEventListener('visibilitychange', function() {
+    if (document.visibilityState === 'visible') {
+        resetForm();
+    }
+});
+
+// Add popstate event handler for Back button
+window.addEventListener('popstate', function(event) {
+    resetForm();
+});
   </script>
   <script src="https://www.google.com/recaptcha/api.js" async defer></script>
     <footer class="page-footer">
