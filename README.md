@@ -26,11 +26,11 @@ This is a Flask web application that helps Washington State residents easily con
 2. **Install dependencies:**  
    `pip install -r requirements.txt`
 3. **Set up API keys:**  
-   Place your API keys in the `flask-app/apikeys/` directory as described in the code.
+   Place your API keys in the `apikeys/` directory as described in the code.
 4. **Edit the prompt for message generation**
    `prompt/prompt.txt`
 5. **Run the app:**  
-   `python app.py` (from the `flask-app/` directory)
+   `python app.py`
 6. **Open in browser:**  
    Visit `http://localhost:10000`
 
