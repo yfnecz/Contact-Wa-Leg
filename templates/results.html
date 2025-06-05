@@ -47,18 +47,29 @@
       <textarea id="email-message" rows="28" style="width:100%;font-size:1em;">{{ message }}</textarea>
     </div>
     <script>
-function sendMailToLawmaker(email, laEmail, chamber, name) {
-    const subject = document.getElementById('email-subject').value;
-    const message = document.getElementById('email-message').value;
-    const greeting = chamber === "Senate" ? "Dear Senator" : "Dear Representative";
-    const body = `${greeting} ${name},\n\n${message}`;
+    function sendMailToLawmaker(email, laEmail, chamber, name) {
+        const subject = document.getElementById('email-subject').value;
+        const message = document.getElementById('email-message').value;
+        const greeting = chamber === "Senate" ? "Dear Senator" : "Dear Representative";
+        const body = `${greeting} ${name},\n\n${message}`;
 
-    let mailto = `mailto:${email}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
-    if (laEmail && laEmail.trim() !== "") {
-        mailto += `&cc=${encodeURIComponent(laEmail)}`;
+        let mailto = `mailto:${email}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+        if (laEmail && laEmail.trim() !== "") {
+            mailto += `&cc=${encodeURIComponent(laEmail)}`;
+        }
+        window.location.href = mailto;
     }
-    window.location.href = mailto;
-}
-</script>
+  </script>
+  <footer style="margin-top: 40px; padding: 16px 0; border-top: 1px solid #ccc; text-align: center; font-size: 0.97em; color: #555;">
+    <div>
+      <span>
+        <a href="https://github.com/yfnecz/contact-wa-leg" target="_blank" rel="noopener">View source / contribute on GitHub</a>
+      </span>
+      <br>
+      <span>
+        Contact: <a href="mailto:yfnecz@gmail.com">yfnecz@gmail.com</a>
+      </span>
+    </div>
+  </footer>
   </body>
 </html>
