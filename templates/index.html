@@ -26,6 +26,9 @@
   <body>
     <div class="container">
       <h1>Send a Message to Your Washington State Legislators</h1>
+      <div style="background: #f9f9e3; border: 1px solid #e6e6b8; padding: 12px; margin-bottom: 18px; border-radius: 6px; font-size: 1.1em;">
+        <strong>Note:</strong> This tool is for sending a message to your Washington State legislators <b>in support of the Decker girls and their family</b>.
+      </div>
       <form method="post" action="/results">
         <label for="name">Your Name:</label>
         <input type="text" id="name" name="name" required>
@@ -34,7 +37,8 @@
         <label for="user_addition">
           Add a personal note about yourself<br>
           <span style="font-weight: normal; font-size: 0.97em;">
-            (optional, will be included in the prompt used for AI text generation)
+            (optional, will be included in the prompt used for AI text generation)<br>
+            <b>If you leave this blank, a message will still be automatically generated for you.</b>
           </span>
         </label><br>
         <textarea id="user_addition" name="user_addition" rows="3" placeholder="This will be used in the AI message generation for your legislators..."></textarea>
