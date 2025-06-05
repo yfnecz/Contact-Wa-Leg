@@ -27,9 +27,11 @@ This is a Flask web application that helps Washington State residents easily con
    `pip install -r requirements.txt`
 3. **Set up API keys:**  
    Place your API keys in the `flask-app/apikeys/` directory as described in the code.
-4. **Run the app:**  
+4. **Edit the prompt for message generation**
+   `prompt/prompt.txt`
+5. **Run the app:**  
    `python app.py` (from the `flask-app/` directory)
-5. **Open in browser:**  
+6. **Open in browser:**  
    Visit `http://localhost:10000`
 
 ## Docker
