@@ -60,8 +60,6 @@ def results():
         new_prompt = base_prompt.get_prompt()
         if user_addition:
             new_prompt += f"\n\nThe constituent adds: {user_addition.strip()}"
-        
-        new_prompt += f"\n\nThe constituent's name is {name.strip()}.\n\n"
 
         try:
             db.increment_usage()
@@ -88,7 +86,7 @@ def results():
             subject = subject.replace("Subject:", "").strip()
             message_body = body.strip()
 
-    message_body += f"\n{address.strip()}\n"
+    message_body += f"\n{name.strip()}\n{address.strip()}\n"
 
     return render_template(
         "results.html",

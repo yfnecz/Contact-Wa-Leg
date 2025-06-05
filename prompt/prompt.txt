@@ -27,3 +27,4 @@ Instructions:
 - For subject please do not use the same words Urgent Need Strengthen Call Action all the time (some of them are okay)
 - Do not include a greeting, it will be appended later.
 - Make the message sound like the real person wrote it.
+- End the message like you normally would, but do not sign, since name will be appended later on the last line: but you can include things like "Sincerely, " and so on
