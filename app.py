@@ -11,7 +11,7 @@ app = Flask(__name__)
 db = db.Database()
 base_prompt = prompt.Prompt()
 api = api_keys.api_keys()
-(ai_key, maps_api_key, geo_api_key, site_key, site_secret) = api.get_keys()
+(ai_key, maps_api_key, site_key, site_secret) = api.get_keys()
 repr_get = repr.DistrictRepresentatives()
 shp = shapefiles.LegislativeDistrictLocator()
 
@@ -26,7 +26,7 @@ def clean_legislators(legislators):
 def index():
     if request.method == "POST":
         return redirect(url_for('index'))
-    return render_template("index.html", google_api_key=maps_api_key, geo_api_key=geo_api_key, site_key=site_key)
+    return render_template("index.html", google_api_key=maps_api_key, site_key=site_key)
 
 
 @app.route("/results", methods=["GET", "POST"])

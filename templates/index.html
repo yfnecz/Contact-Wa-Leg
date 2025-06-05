@@ -55,138 +55,95 @@
     </div>
     <script src="https://maps.googleapis.com/maps/api/js?key={{ google_api_key }}&libraries=places"></script>
     <script>
-  function initAutocomplete() {
-    const addressInput = document.getElementById('address');
-    const autocomplete = new google.maps.places.Autocomplete(addressInput, {
-      types: ['address'],
-      componentRestrictions: { country: 'us' }
-    });
+function initAutocomplete() {
+  const addressInput = document.getElementById('address');
+  const autocomplete = new google.maps.places.Autocomplete(addressInput, {
+    types: ['address'],
+    componentRestrictions: { country: 'us' }
+  });
 
-    // Optional: handle place selection
-    autocomplete.addListener('place_changed', function() {
-      const place = autocomplete.getPlace();
-      // Clear previous values
-      document.getElementById('street_number').value = '';
-      document.getElementById('route').value = '';
-      document.getElementById('locality').value = '';
-      document.getElementById('administrative_area_level_1').value = '';
-      document.getElementById('postal_code').value = '';
-      document.getElementById('lat').value = '';
-      document.getElementById('lng').value = '';
-      // Fill with new values
-      place.address_components.forEach(component => {
-        if (component.types.includes('street_number')) {
-          document.getElementById('street_number').value = component.long_name;
-        }
-        if (component.types.includes('route')) {
-          document.getElementById('route').value = component.long_name;
-        }
-        if (component.types.includes('locality')) {
-          document.getElementById('locality').value = component.long_name;
-        }
-        if (component.types.includes('administrative_area_level_1')) {
-          document.getElementById('administrative_area_level_1').value = component.short_name;
-        }
-        if (component.types.includes('postal_code')) {
-          document.getElementById('postal_code').value = component.long_name;
-        }
-      });
-      // Set lat/lng if available
-      if (place.geometry && place.geometry.location) {
-        document.getElementById('lat').value = place.geometry.location.lat();
-        document.getElementById('lng').value = place.geometry.location.lng();
+  autocomplete.addListener('place_changed', function() {
+    const place = autocomplete.getPlace();
+    // Clear previous values
+    document.getElementById('street_number').value = '';
+    document.getElementById('route').value = '';
+    document.getElementById('locality').value = '';
+    document.getElementById('administrative_area_level_1').value = '';
+    document.getElementById('postal_code').value = '';
+    document.getElementById('lat').value = '';
+    document.getElementById('lng').value = '';
+    // Fill with new values
+    place.address_components.forEach(component => {
+      if (component.types.includes('street_number')) {
+        document.getElementById('street_number').value = component.long_name;
+      }
+      if (component.types.includes('route')) {
+        document.getElementById('route').value = component.long_name;
+      }
+      if (component.types.includes('locality')) {
+        document.getElementById('locality').value = component.long_name;
+      }
+      if (component.types.includes('administrative_area_level_1')) {
+        document.getElementById('administrative_area_level_1').value = component.short_name;
+      }
+      if (component.types.includes('postal_code')) {
+        document.getElementById('postal_code').value = component.long_name;
       }
     });
-  }
+    // Set lat/lng if available
+    if (place.geometry && place.geometry.location) {
+      document.getElementById('lat').value = place.geometry.location.lat();
+      document.getElementById('lng').value = place.geometry.location.lng();
+    }
+  });
+}
 
-  // Initialize autocomplete after the page loads
-  window.addEventListener('DOMContentLoaded', initAutocomplete);
+// Initialize autocomplete after the page loads
+window.addEventListener('DOMContentLoaded', initAutocomplete);
 
-  document.querySelector('form').addEventListener('submit', function(e) {
-  const streetNumber = document.getElementById('street_number').value;
-  const route = document.getElementById('route').value;
-  const locality = document.getElementById('locality').value;
+document.querySelector('form').addEventListener('submit', function(e) {
   const state = document.getElementById('administrative_area_level_1').value;
-  const postalCode = document.getElementById('postal_code').value;
-  const address = document.getElementById('address').value;
+  const lat = document.getElementById('lat').value;
+  const lng = document.getElementById('lng').value;
 
   document.getElementById('address-error').style.display = 'none';
 
-  // If any field is missing, try to geocode
-  if (!state || !document.getElementById('lat').value || !document.getElementById('lng').value) {
+  // Require user to select a suggestion (fields must be filled)
+  if (!state || !lat || !lng) {
     e.preventDefault();
-
-    fetch(`https://maps.googleapis.com/maps/api/geocode/json?address=${encodeURIComponent(address)}&key={{ geo_api_key }}`)
-      .then(response => response.json())
-      .then(data => {
-        console.log('Geocode API response:', data); // <-- Add this line
-        if (data.status === "OK" && data.results.length > 0) {
-          const components = data.results[0].address_components;
-          console.log('Address components:', components);
-          let foundWA = false;
-          let newStreetNumber = '', newRoute = '', newLocality = '', newState = '', newPostalCode = '';
-          components.forEach(component => {
-            if (component.types.includes('administrative_area_level_1')) {
-              document.getElementById('administrative_area_level_1').value = component.short_name;
-              newState = component.short_name;
-              if (component.short_name === "WA") foundWA = true;
-            }
-            if (component.types.includes('street_number')) {
-              document.getElementById('street_number').value = component.long_name;
-              newStreetNumber = component.long_name;
-            }
-            if (component.types.includes('route')) {
-              document.getElementById('route').value = component.long_name;
-              newRoute = component.long_name;
-            }
-            if (component.types.includes('locality')) {
-              document.getElementById('locality').value = component.long_name;
-              newLocality = component.long_name;
-            }
-            if (component.types.includes('postal_code')) {
-              document.getElementById('postal_code').value = component.long_name;
-              newPostalCode = component.long_name;
-            }
-          });
-          // Set lat/lng from geocoding result
-          const location = data.results[0].geometry.location;
-          document.getElementById('lat').value = location.lat;
-          document.getElementById('lng').value = location.lng;
-
-          // Now check again with updated values
-          if (!foundWA) {
-            document.getElementById('address-error').textContent = "Sorry, this tool is only for Washington State addresses.";
-            document.getElementById('address-error').style.display = 'block';
-            return;
-          }
-          if (!location.lat || !location.lng || !newState) {
-            document.getElementById('address-error').textContent = "Could not parse address location. Please select from suggestions or enter a valid address.";
-            document.getElementById('address-error').style.display = 'block';
-            return;
-          }
-          // All good, submit the form
-          e.target.submit();
-        } else {
-          document.getElementById('address-error').textContent = "Could not parse address. Please select from suggestions or enter a valid address.";
-          document.getElementById('address-error').style.display = 'block';
-        }
-      });
+    document.getElementById('address-error').textContent =
+      "Please select your address from the suggestions and ensure it is in Washington State.";
+    document.getElementById('address-error').style.display = 'block';
     return;
   }
 
-  // Now all fields are filled, check if state is WA
+  // Only allow WA addresses
   if (state !== "WA") {
     e.preventDefault();
-    document.getElementById('address-error').textContent = "Sorry, this tool is only for Washington State addresses.";
+    document.getElementById('address-error').textContent =
+      "Sorry, this tool is only for Washington State addresses.";
     document.getElementById('address-error').style.display = 'block';
     return;
   }
   // else: allow normal submit
 });
-    function enableSubmit() {
-      document.getElementById('submit-btn').disabled = false;
-    }
+
+function enableSubmit() {
+  document.getElementById('submit-btn').disabled = false;
+}
     </script>
     <script src="https://www.google.com/recaptcha/api.js" async defer></script>
+  <!-- Add this just before the closing </body> tag -->
+  <footer style="margin-top: 40px; padding: 16px 0; border-top: 1px solid #ccc; text-align: center; font-size: 0.97em; color: #555;">
+    <div>
+      <span>
+        <a href="https://github.com/yfnecz/contact-wa-leg" target="_blank" rel="noopener">View source / contribute on GitHub</a>
+      </span>
+      <br>
+      <span>
+        Contact: <a href="mailto:yfnecz@gmail.com">yfnecz@gmail.com</a>
+      </span>
+    </div>
+  </footer>
   </body>
 </html>
