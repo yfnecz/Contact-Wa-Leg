@@ -86,7 +86,7 @@ def results():
             subject = subject.replace("Subject:", "").strip()
             message_body = body.strip()
 
-    message_body += f"\n{name.strip()}\n{address.strip()}\n"
+        message_body += f"\n{name.strip()}\n{address.strip()}\n"
 
     return render_template(
         "results.html",
