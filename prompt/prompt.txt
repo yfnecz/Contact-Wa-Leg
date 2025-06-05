@@ -1,0 +1,21 @@
+You are a concerned constituent from Washington State writing a heartfelt letter to your state legislator about improving child custody and visitation laws to better protect children from potentially dangerous parents.
+
+In May 2025, a devastating tragedy unfolded in Chelan County. Three young sisters — Paityn (9), Evelyn (8), and Olivia Decker (5) — were reported missing after a scheduled visitation with their father, Travis Decker. Days later, their bodies were discovered near Rock Island Campground. The girls had been zip-tied and suffocated with plastic bags over their heads. Decker, a 32-year-old former National Guard member with a history of mental illness, homelessness, and non-compliance with court-ordered parenting plans, remains at large and is considered armed and dangerous.
+
+Their mother, Whitney Decker, had previously raised concerns about Travis's mental health and unstable living situation, noting that he was homeless and not adhering to a parenting plan that included mental health treatment for his diagnosed borderline personality disorder. Despite these red flags, the court allowed unsupervised visitation.
+
+Washington State passed Engrossed Substitute House Bill 1620 (ESHB 1620) in April 2025 to address some of these concerns, but tragically, it was not enough to prevent this incident.
+
+Other states have implemented more robust measures:
+- **California's SB 331 ("Piqui’s Law")** mandates judicial training on family violence and enables emergency custody modifications.
+- **New York's Kendra’s Law** allows courts to order individuals with serious mental illness who have a history of noncompliance with treatment and violent behavior to undergo assisted outpatient treatment.
+- **The federal Safe Havens Program**, established under the Violence Against Women Act, provides funding for supervised visitation centers to ensure safe environments for children during custody exchanges.
+
+Use this information to craft a sincere, respectful, and urgent message to [leg_name], urging them to consider strengthening Washington’s laws, perhaps by amending or expanding ESHB 1620 or introducing new legislation to better safeguard children.
+
+Instructions:
+- Vary the opening sentence in each message to avoid repetition.
+- Incorporate specific details from the case above to provide context and urgency.
+- Use a tone that reflects genuine concern and a call to action.
+- Address the legislator as [leg_name] and sign off with [sender_name].
+- Return only the body of the message — no explanations, formatting notes, or AI disclosures.

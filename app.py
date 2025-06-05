@@ -1,14 +1,15 @@
 from flask import Flask, render_template, request, redirect, url_for
 import cohere
+from prompt import prompt
+from apikeys import api_keys
+from db import db
 
 app = Flask(__name__)
 
-with open("/Users/Natali/PycharmProjects/contact-wa/flask-template/api.key") as file:
-    api_key = file.read().strip()
-with open("/Users/Natali/PycharmProjects/contact-wa/flask-template/geo-api.key") as file:
-    geo_api_key = file.read().strip()
-with open("/Users/Natali/PycharmProjects/contact-wa/flask-template/ai.key") as file:
-    ai_key = file.read().strip()
+db = db.Database()
+base_prompt = prompt.Prompt()
+api = api_keys.api_keys()
+(ai_key, maps_api_key, geo_api_key) = api.get_keys()
 
 @app.route("/", methods=["GET", "POST"])
 def index():
@@ -35,7 +36,7 @@ def index():
             lat=lat,
             lng=lng
         ))
-    return render_template("index.html", google_api_key=api_key, geo_api_key=geo_api_key)
+    return render_template("index.html", google_api_key=maps_api_key, geo_api_key=geo_api_key)
 
 
 @app.route("/results")
@@ -46,44 +47,37 @@ def results():
         {"name": "Sen. Bob Johnson", "district": "District 1"}
     ]
 
-    name = request.args.get("name")
+    # name = request.args.get("name")
+    new_prompt = base_prompt.get_prompt()
 
-    # Pre-filled message
-    prompt = f"""
-You are a concerned constituent from Washington State writing a heartfelt letter to your state legislator about improving child custody and visitation laws to better protect children from potentially dangerous parents.
+    try:
+        co = cohere.Client(ai_key)
+        response = co.chat(
+            model="command-a-03-2025",
+            message=new_prompt,
+            temperature=1.0,
+            p=0.9,
+            k=40,
+            max_tokens=500
+        )
+        
+        response = response.text
+        db.cache_response(response)
 
-Recently, a tragic case in Wenatchee involving the Decker girls exposed serious gaps in the current laws.
-
-Washington State passed a bill, SB 5175, in April 2025 to address some of these concerns, but sadly it was not enough to prevent this tragedy.
-
-Other states, like California with its AB 275 law, have implemented more effective measures, including emergency custody modifications and closer monitoring of parents with mental health or compliance challenges.
-
-Use these facts to craft a sincere, respectful, and urgent message urging [leg_name] to consider strengthening Washington’s laws, perhaps by amending or expanding SB 5175 to better safeguard children.
-
-Make sure each message you generate is unique: vary sentence structures, word choices, and tone slightly while maintaining clarity and respect.
-
-Feel free to add natural personal touches or emotions to make the letter sound like it truly comes from a concerned citizen.
-
-Include the name of the message sender as {name} in a natural way.
-
-Only return the message content itself—no explanations, formatting notes, or AI disclosures.
-
-Do not include all details every time; use the information flexibly to create a fresh, authentic letter each time.
-
-"""
-
-    co = cohere.ClientV2(ai_key)
-    response = co.chat(
-        model="command-a-03-2025", 
-        messages=[{"role": "user", "content": prompt}]
-    )
+    except Exception as e:
+        print(f"Error calling Cohere API: {e}")
+        cached_response = db.get_random_cached_response()
+        if cached_response:
+            response = cached_response
+        else:
+            response = "An error occurred while generating the message."
 
     return render_template(
         "results.html",
         name=request.args.get("name"),
         address=request.args.get("address"),
         legislators=legislators,
-        message=response.message.content[0].text
+        message=response
     )
 
 
