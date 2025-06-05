@@ -30,10 +30,10 @@ def clean_legislators(legislators):
 def index():
     name = request.args.get('name', '')
     address = request.args.get('address', '')
+    intro_text = base_prompt.get_intro_text()
     if request.method == "POST":
         return redirect(url_for('index'))
-    return render_template("index.html", google_api_key=maps_api_key, site_key=site_key)
-
+    return render_template("index.html", google_api_key=maps_api_key, site_key=site_key, intro_text=intro_text)
 
 @app.route("/results", methods=["GET", "POST"])
 def results():
@@ -60,6 +60,14 @@ def results():
         district_info = shp.get_district(lat, lng)
         district_number = district_info['ID']
     
+        if not district_number:
+            return render_template(
+                "index.html",
+                error="Could not determine your legislative district. Please check your address.",
+                google_api_key=maps_api_key,
+                site_key=site_key
+            )
+        
         representatives = repr_get.get_representatives(district_number)
         representatives = clean_legislators(representatives)
         

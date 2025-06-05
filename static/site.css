@@ -67,9 +67,19 @@ h1, h2 {
     margin-bottom: 18px;
 }
 
+h1 {
+    font-size: 1.3em;
+    color: #2c3e50;
+    margin-bottom: 1em;
+    font-weight: 600;
+}
+
 label {
     font-weight: 500;
     color: #2d3a4b;
+    display: block;
+    margin-bottom: 4px;  /* Adds space between label and its field */
+    margin-top: 12px;    /* Adds space between different field groups */
 }
 
 input[type="text"], textarea {
@@ -130,6 +140,10 @@ textarea {
     h1, h2 {
         font-size: 1.2em;
     }
+}
+
+form {
+    margin-top: 24px;  /* Adds space before the form */
 }
 
 button:disabled,
@@ -270,4 +284,80 @@ h2 {
 }
 .mailto-btn:hover {
     background: #125ea6;
+}
+
+/* Info boxes */
+.info-box {
+    background: #f9f9e3;
+    border: 1px solid #e6e6b8;
+    padding: 12px;
+    margin-bottom: 18px;
+    border-radius: 6px;
+    font-size: 1.1em;
+    font-weight: bold;
+}
+
+.tip-box {
+    margin: 18px 0 8px 0;
+    padding: 8px;
+    background: #f1f8e9;
+    border-left: 4px solid #81c784;
+    border-radius: 4px;
+    color: #2e7d32;
+    font-size: 1em;
+}
+
+/* Footer styles */
+.page-footer {
+    margin-top: 40px;
+    padding: 16px 0;
+    border-top: 1px solid #ccc;
+    text-align: center;
+    font-size: 0.97em;
+    color: #555;
+}
+
+/* Error message */
+#address-error {
+    color: red;
+    display: none;
+    margin-top: 8px;
+}
+
+/* Google Places Autocomplete styles */
+.autocomplete-suggestions {
+    border: 1px solid #ccc;
+    max-height: 150px;
+    overflow-y: auto;
+    background: #fff;
+    position: absolute;
+    z-index: 1000;
+    width: 300px;
+}
+
+.autocomplete-suggestion {
+    padding: 8px;
+    cursor: pointer;
+}
+
+.autocomplete-suggestion:hover {
+    background: #f0f0f0;
+}
+
+.help-text {
+    color: #666;
+    font-size: 0.9em;
+}
+
+#user_addition {
+    min-height: 90px;
+    padding: 8px;
+    resize: vertical;  /* allows user to resize vertically if needed */
+    line-height: 1.4;  /* improves text readability */
+}
+
+.message-note {
+    color: #666;
+    margin-bottom: 8px;
+    font-size: 0.9em;
 }

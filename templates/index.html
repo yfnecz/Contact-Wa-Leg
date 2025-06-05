@@ -4,44 +4,25 @@
     <meta charset="utf-8">
     <title>Send a Message to Your Washington State Legislators</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='site.css') }}">
-    <style>
-      .autocomplete-suggestions {
-        border: 1px solid #ccc;
-        max-height: 150px;
-        overflow-y: auto;
-        background: #fff;
-        position: absolute;
-        z-index: 1000;
-        width: 300px;
-      }
-      .autocomplete-suggestion {
-        padding: 8px;
-        cursor: pointer;
-      }
-      .autocomplete-suggestion:hover {
-        background: #f0f0f0;
-      }
-    </style>
   </head>
   <body>
     <div class="container">
       <h1>Send a Message to Your Washington State Legislators</h1>
-      <div style="background: #f9f9e3; border: 1px solid #e6e6b8; padding: 12px; margin-bottom: 18px; border-radius: 6px; font-size: 1.1em;">
-        <strong>Note:</strong> This tool is for sending a message to your Washington State legislators <b>in support of the Decker girls and their family</b>.
+      <div class="info-box">
+        {{ intro_text }}
+      </div>
+      <div class="tip-box">
+        This site helps you send a message to your Washington State legislators using publicly available contact info. Suggested messages are AI-generated and editable. You will be able to preview and edit your message on the next page.
       </div>
       <form method="post" action="/results">
         <label for="name">Your Name:</label>
         <input type="text" id="name" name="name" required>
-        <label for="address">Your Address:</label>
+        <label for="address">Your Address <span class="help-text">(used to locate your district representatives)</span>:</label>
         <input type="text" id="address" name="address" autocomplete="off" required>
-        <!-- Add the tip here -->
-        <div style="margin: 18px 0 8px 0; padding: 8px; background: #f1f8e9; border-left: 4px solid #81c784; border-radius: 4px; color: #2e7d32; font-size: 1em;">
-          <b>Tip:</b> If you leave the text field blank, a message will still be automatically generated for you.
-        </div>
         <label for="user_addition">
-          Add a personal note about yourself (optional)<br>
+          Add a personal note about yourself:<br>
         </label>
-        <textarea id="user_addition" name="user_addition" rows="2" placeholder="This will be used in the AI message generation for your legislators..."></textarea>
+        <textarea id="user_addition" name="user_addition" rows="3" placeholder="This optional additional info will be used in the AI message generation for your legislators. If you leave the text field blank, a message will still be automatically generated for you."></textarea>
         <!-- Hidden fields for address parts -->
         <input type="hidden" id="street_number" name="street_number">
         <input type="hidden" id="route" name="route">
@@ -50,15 +31,13 @@
         <input type="hidden" id="postal_code" name="postal_code">
         <input type="hidden" id="lat" name="lat">
         <input type="hidden" id="lng" name="lng">
-        <br>
         <div class="g-recaptcha" data-sitekey="{{ site_key }}" data-callback="enableSubmit"></div>
-          <!-- Add the tip here -->
-        <div style="margin: 18px 0 8px 0; padding: 8px; background: #f1f8e9; border-left: 4px solid #81c784; border-radius: 4px; color: #2e7d32; font-size: 1em;">
-          <b>Tip:</b> Complete the reCAPTCHA and click the button below to preview your message.
+        <div class="tip-box">
+          Complete the reCAPTCHA and click the button below to preview your message.
         </div>
         <button type="submit" id="submit-btn" disabled>Preview Generated Message</button>
       </form>
-      <p id="address-error" style="color: red; display: none;"></p>
+      <p id="address-error"></p>
     </div>
     <script src="https://maps.googleapis.com/maps/api/js?key={{ google_api_key }}&libraries=places"></script>
     <script>
@@ -71,7 +50,6 @@ function initAutocomplete() {
 
   autocomplete.addListener('place_changed', function() {
     const place = autocomplete.getPlace();
-    // Clear previous values
     document.getElementById('street_number').value = '';
     document.getElementById('route').value = '';
     document.getElementById('locality').value = '';
@@ -105,7 +83,6 @@ function initAutocomplete() {
   });
 }
 
-// Initialize autocomplete after the page loads
 window.addEventListener('DOMContentLoaded', initAutocomplete);
 
 document.querySelector('form').addEventListener('submit', function(e) {
@@ -138,19 +115,18 @@ document.querySelector('form').addEventListener('submit', function(e) {
 function enableSubmit() {
   document.getElementById('submit-btn').disabled = false;
 }
-    </script>
-    <script src="https://www.google.com/recaptcha/api.js" async defer></script>
-  <!-- Add this just before the closing </body> tag -->
-  <footer style="margin-top: 40px; padding: 16px 0; border-top: 1px solid #ccc; text-align: center; font-size: 0.97em; color: #555;">
-    <div>
-      <span>
-        <a href="https://github.com/yfnecz/contact-wa-leg" target="_blank" rel="noopener">View source / contribute on GitHub</a>
-      </span>
-      <br>
-      <span>
-        Contact: <a href="mailto:yfnecz@gmail.com">yfnecz@gmail.com</a>
-      </span>
-    </div>
-  </footer>
+  </script>
+  <script src="https://www.google.com/recaptcha/api.js" async defer></script>
+    <footer class="page-footer">
+      <div>
+        <span>
+          <a href="https://github.com/yfnecz/contact-wa-leg" target="_blank" rel="noopener">View source / contribute on GitHub</a>
+        </span>
+        <br>
+        <span>
+          Contact: <a href="mailto:yfnecz@gmail.com">yfnecz@gmail.com</a>
+        </span>
+      </div>
+    </footer>
   </body>
 </html>

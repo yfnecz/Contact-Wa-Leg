@@ -20,6 +20,9 @@ Even in cases with red flags, courts may order unsupervised visitation, bypassin
 Use this information to craft a sincere, respectful, and urgent message to state representatives, urging them to consider strengthening Washington’s laws, perhaps by amending or expanding ESHB 1620 or introducing new legislation to better safeguard children.
 
 Instructions:
+- Keep the response concise, under 500 tokens (approximately 375 words)
+- Be clear and impactful while maintaining brevity
+- Include both subject and message body within this limit
 - Vary the opening sentence in each message to avoid repetition.
 - Incorporate specific details from the case above to provide context and urgency.
 - Use a tone that reflects genuine concern and a call to action.

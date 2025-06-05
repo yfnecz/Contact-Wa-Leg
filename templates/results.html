@@ -49,12 +49,14 @@
       </ul>
       <!-- Add the tip here -->
       <div style="margin: 18px 0 8px 0; padding: 8px; background: #f1f8e9; border-left: 4px solid #81c784; border-radius: 4px; color: #2e7d32; font-size: 1em;">
-        <b>Tip:</b> You can edit the subject and message below before sending your email.
+        <b>About this message:</b> The subject and message below were automatically generated using AI and are unique for each submission. <b>You can edit both before sending.</b>
       </div>
       <h2>Email Subject</h2>
       <input type="text" id="email-subject" value="{{ subject }}" style="width:100%;margin-bottom:16px;">
       <h2>Message</h2>
-      <p>Dear Senator/Representative (will be personalized)</p>
+      <p class="message-note">
+        Note: "Dear Senator/Representative" greeting will be automatically added with the correct title and name when you click the email button above.
+      </p>
       <textarea id="email-message" rows="28" style="width:100%;font-size:1em;">{{ message }}</textarea>
     </div>
     <script>
