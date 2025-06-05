@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request, redirect, url_for
+from flask import Flask, render_template, request, redirect, url_for, session
 import cohere, pandas as pd, requests
 from prompt import prompt
 from apikeys import api_keys
@@ -6,14 +6,18 @@ from db import db
 from representatives import repr
 from shapefiles import shapefiles
 
+
 app = Flask(__name__)
+
 
 db = db.Database()
 base_prompt = prompt.Prompt()
 api = api_keys.api_keys()
-(ai_key, maps_api_key, site_key, site_secret) = api.get_keys()
+(ai_key, maps_api_key, site_key, site_secret, app_secret) = api.get_keys()
 repr_get = repr.DistrictRepresentatives()
 shp = shapefiles.LegislativeDistrictLocator()
+
+app.secret_key = app_secret
 
 def clean_legislators(legislators):
     for leg in legislators:
@@ -24,6 +28,8 @@ def clean_legislators(legislators):
 
 @app.route("/", methods=["GET", "POST"])
 def index():
+    name = request.args.get('name', '')
+    address = request.args.get('address', '')
     if request.method == "POST":
         return redirect(url_for('index'))
     return render_template("index.html", google_api_key=maps_api_key, site_key=site_key)
@@ -88,14 +94,30 @@ def results():
 
         message_body += f"\n{name.strip()}\n{address.strip()}\n"
 
+        # Store data in session instead of URL
+        session['name'] = name
+        session['address'] = address
+        session['subject'] = subject
+        session['message'] = message_body
+        session['district'] = district_number
+        session['representatives'] = representatives
+        
+        return redirect(url_for('results'))
+    
+    required_keys = ['name', 'address', 'representatives', 'subject', 'message', 'district']
+    if not all(key in session for key in required_keys):
+        # Redirect to index if session data is missing
+        return redirect(url_for('index'))
+
+    # Get data from session
     return render_template(
         "results.html",
-        name=name,
-        address=address,  # <-- Use the variable from request.form
-        legislators=representatives,
-        subject=subject,
-        message=message_body,
-        district=district_number
+        name=session.get('name'),
+        address=session.get('address'),
+        legislators=session.get('representatives'),
+        subject=session.get('subject'),
+        message=session.get('message'),
+        district=session.get('district')
     )
 
 

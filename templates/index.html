@@ -34,14 +34,14 @@
         <input type="text" id="name" name="name" required>
         <label for="address">Your Address:</label>
         <input type="text" id="address" name="address" autocomplete="off" required>
+        <!-- Add the tip here -->
+        <div style="margin: 18px 0 8px 0; padding: 8px; background: #f1f8e9; border-left: 4px solid #81c784; border-radius: 4px; color: #2e7d32; font-size: 1em;">
+          <b>Tip:</b> If you leave the text field blank, a message will still be automatically generated for you.
+        </div>
         <label for="user_addition">
-          Add a personal note about yourself<br>
-          <span style="font-weight: normal; font-size: 0.97em;">
-            (optional, will be included in the prompt used for AI text generation)<br>
-            <b>If you leave this blank, a message will still be automatically generated for you.</b>
-          </span>
-        </label><br>
-        <textarea id="user_addition" name="user_addition" rows="3" placeholder="This will be used in the AI message generation for your legislators..."></textarea>
+          Add a personal note about yourself (optional)<br>
+        </label>
+        <textarea id="user_addition" name="user_addition" rows="2" placeholder="This will be used in the AI message generation for your legislators..."></textarea>
         <!-- Hidden fields for address parts -->
         <input type="hidden" id="street_number" name="street_number">
         <input type="hidden" id="route" name="route">
@@ -52,7 +52,10 @@
         <input type="hidden" id="lng" name="lng">
         <br>
         <div class="g-recaptcha" data-sitekey="{{ site_key }}" data-callback="enableSubmit"></div>
-        <br>
+          <!-- Add the tip here -->
+        <div style="margin: 18px 0 8px 0; padding: 8px; background: #f1f8e9; border-left: 4px solid #81c784; border-radius: 4px; color: #2e7d32; font-size: 1em;">
+          <b>Tip:</b> Complete the reCAPTCHA and click the button below to preview your message.
+        </div>
         <button type="submit" id="submit-btn" disabled>Preview Generated Message</button>
       </form>
       <p id="address-error" style="color: red; display: none;"></p>

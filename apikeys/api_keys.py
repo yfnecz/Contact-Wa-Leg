@@ -18,7 +18,9 @@ class api_keys:
             self.site_key = file.read().strip()
         with open(os.path.join(dir, "captcha.secret")) as file:
             self.site_secret = file.read().strip()
+        with open(os.path.join(dir, "app-secret.key")) as file:
+            self.api_secret_key = file.read().strip()
     
 
     def get_keys(self):
-        return (self.ai_key, self.maps_api_key, self.site_key, self.site_secret)
+        return (self.ai_key, self.maps_api_key, self.site_key, self.site_secret, self.api_secret_key)

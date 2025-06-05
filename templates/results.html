@@ -7,6 +7,12 @@
   </head>
   <body>
     <div class="container">
+      <div style="margin-bottom: 20px;">
+        <a href="{{ url_for('index', name=name, address=address) }}" 
+           style="display: inline-block; padding: 8px 16px; background: #f5f5f5; color: #333; text-decoration: none; border-radius: 4px; border: 1px solid #ddd;">
+          ← Back to Homepage
+        </a>
+      </div>
       <p><strong>Your Name:</strong> {{ name }}</p>
       <p><strong>Address:</strong> {{ address }}</p>
       <h1 class="results-header">Your Legislators</h1>
