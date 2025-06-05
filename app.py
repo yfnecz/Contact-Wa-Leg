@@ -8,12 +8,10 @@ from shapefiles import shapefiles
 
 app = Flask(__name__)
 
-db = db.Database("./data/ai_cache.db")
+db = db.Database()
 base_prompt = prompt.Prompt()
 api = api_keys.api_keys()
 (ai_key, maps_api_key, geo_api_key, site_key, site_secret) = api.get_keys()
-# use wrong ai key for now
-ai_key='test'
 repr_get = repr.DistrictRepresentatives()
 shp = shapefiles.LegislativeDistrictLocator()
 
