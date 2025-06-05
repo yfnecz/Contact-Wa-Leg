@@ -30,12 +30,13 @@
               <button
                 type="button"
                 class="mailto-btn"
+                style="background: #1976d2; color: #fff; font-size: 1.08em; padding: 10px 18px; border: none; border-radius: 5px; margin-top: 8px; cursor: pointer; box-shadow: 0 2px 6px rgba(25,118,210,0.08);"
                 onclick='sendMailToLawmaker(
                   {{ legislator.email|tojson }},
                   {{ legislator.la_email|default('')|tojson }},
                   {{ legislator.chamber|tojson }},
                   {{ legislator.name|tojson }}
-                )'>Send below message to this lawmaker</button>
+                )'>Click here to email {{ legislator.name }}</button>
             </span>
           </li>
         {% endfor %}
