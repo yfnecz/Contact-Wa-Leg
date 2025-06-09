@@ -31,9 +31,10 @@ This is a Flask web application that helps Washington State residents easily con
    Place your API keys in the `apikeys/` directory as described in the code.
 4. **Edit the prompt for message generation**
    `prompt/prompt.txt`
-5. **Run the app:**  
+   `prompt/info.txt`
+6. **Run the app:**  
    `python app.py`
-6. **Open in browser:**  
+7. **Open in browser:**  
    Visit `http://localhost:10000`
 
 ## Docker
