@@ -49,7 +49,14 @@ docker run -p 10000:10000 -v /data -v $(pwd)/apikeys:/etc/secrets --rm contact-w
 ## Contributing
 
 Pull requests and suggestions are welcome!  
-See [GitHub repo](https://github.com/yfnecz/contact-wa-leg) for more info.
+
+## Data
+
+Shapefiles can be downloaded here (if updated):
+[Shapefiles](https://geo.wa.gov/datasets/wa-ofm::washington-state-legislative-districts-2024/about)
+
+List of legislators can be downloaded here (if update is needed):
+[List of legislators](https://leg.wa.gov/legislators/?activeView=MemberList)
 
 ---
 
