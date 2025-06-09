@@ -58,7 +58,7 @@ def results():
         user_addition = request.form.get("user_addition", "")
         
         district_info = shp.get_district(lat, lng)
-        district_number = district_info['ID']
+        district_number = district_info['District']
     
         if not district_number:
             return render_template(

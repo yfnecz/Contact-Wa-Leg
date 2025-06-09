@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?><MD_Metadata xmlns:gts="http://www.isotc211.org/2005/gts" xmlns:gco="http://www.isotc211.org/2005/gco" xmlns:xalan="http://xml.apache.org/xalan" xmlns:srv="http://www.isotc211.org/2005/srv" xmlns:gmx="http://www.isotc211.org/2005/gmx" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:gml="http://www.opengis.net/gml" xmlns="http://www.isotc211.org/2005/gmd">
+    <characterSet>
+        <MD_CharacterSetCode codeList="http://www.isotc211.org/2005/resources/Codelist/gmxCodelists.xml#MD_CharacterSetCode" codeListValue="utf8" codeSpace="ISOTC211/19115">utf8</MD_CharacterSetCode>
+    </characterSet>
+    <hierarchyLevel>
+        <MD_ScopeCode codeList="http://www.isotc211.org/2005/resources/Codelist/gmxCodelists.xml#MD_ScopeCode" codeListValue="dataset" codeSpace="ISOTC211/19115">dataset</MD_ScopeCode>
+    </hierarchyLevel>
+    <hierarchyLevelName>
+        <gco:CharacterString>dataset</gco:CharacterString>
+    </hierarchyLevelName>
+    <contact gco:nilReason="missing"/>
+    <dateStamp gco:nilReason="missing"/>
+    <metadataStandardName>
+        <gco:CharacterString>ISO 19139 Geographic Information - Metadata - Implementation Specification</gco:CharacterString>
+    </metadataStandardName>
+    <metadataStandardVersion>
+        <gco:CharacterString>2007</gco:CharacterString>
+    </metadataStandardVersion>
+    <identificationInfo>
+        <MD_DataIdentification>
+            <citation gco:nilReason="missing"/>
+            <abstract>
+                <gco:CharacterString>Washington Legislative Districts 2024, also known as Remedial Map 3B, created in CASE NO. 3:22-cv-05035-RSL at the United States District Court for the Western District of Washinton at Seattle, presided over by judge Robert. S Lasnik.https://www.documentcloud.org/documents/24483664-redistricting-orderThese districts replace the 2022 Legislative districts and will be used in the 2024 elections pending US Supreme Court action.Please note that there are four split Census Blocks due to annexations in Yakima County. Portions of blocks 530770018013012, 530770018012077, 530770020042004, and 530770018011075 transferred from LD 15 to LD 14. This feature layer contains 49 features representing each of Washington State's 49 legislative districts and is projected to NAD 1983 HARN Washington State Plane South US Feet.For questions, please contact Nicholas Pharris at the Secretary of State. nicholas.pharris@sos.wa.gov</gco:CharacterString>
+            </abstract>
+            <purpose>
+                <gco:CharacterString>Washington Legislative Districts 2024, also known as Remedial Map 3B</gco:CharacterString>
+            </purpose>
+            <credit>
+                <gco:CharacterString>Nicholas Pharris
+nicholas.pharris@sos.wa.gov</gco:CharacterString>
+            </credit>
+            <descriptiveKeywords>
+                <MD_Keywords>
+                    <keyword>
+                        <gco:CharacterString>legislative districts</gco:CharacterString>
+                    </keyword>
+                    <keyword>
+                        <gco:CharacterString>2024</gco:CharacterString>
+                    </keyword>
+                    <keyword>
+                        <gco:CharacterString>Washington State</gco:CharacterString>
+                    </keyword>
+                    <keyword>
+                        <gco:CharacterString>Remdial Map 3B</gco:CharacterString>
+                    </keyword>
+                </MD_Keywords>
+            </descriptiveKeywords>
+            <resourceConstraints>
+                <MD_Constraints>
+                    <useLimitation>
+                        <gco:CharacterString>These districts replace the 2022 Legislative districts and will be used in the 2024 elections pending US Supreme Court action.</gco:CharacterString>
+                    </useLimitation>
+                </MD_Constraints>
+            </resourceConstraints>
+            <language gco:nilReason="missing"/>
+            <characterSet>
+                <MD_CharacterSetCode codeList="http://www.isotc211.org/2005/resources/Codelist/gmxCodelists.xml#MD_CharacterSetCode" codeListValue="utf8" codeSpace="ISOTC211/19115">utf8</MD_CharacterSetCode>
+            </characterSet>
+        </MD_DataIdentification>
+    </identificationInfo>
+</MD_Metadata>

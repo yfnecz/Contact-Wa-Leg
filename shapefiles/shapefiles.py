@@ -2,7 +2,7 @@ import geopandas as gpd, os
 from shapely.geometry import Point
 
 class LegislativeDistrictLocator:
-    def __init__(self, shapefile_path="LEG_AMEND_FINAL_GCS_NAD83.shp"):
+    def __init__(self, shapefile_path="Washington_State_Legislative_Districts_2024.shp"):
         # Load the shapefile once during initialization
         dir = os.path.dirname(__file__)
         shapefile_path = os.path.join(dir, "Legislative", shapefile_path)
