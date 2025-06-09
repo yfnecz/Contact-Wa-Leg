@@ -1,0 +1,25 @@
+# Exported from Render on 2025-06-06T00:29:35Z
+services:
+- type: web
+  name: Contact WA legislators
+  runtime: docker
+  repo: https://github.com/yfnecz/contact-wa-leg
+  plan: starter
+  envVars:
+  - key: app-secret.key
+    sync: false
+  - key: maps-api.key
+    sync: false
+  - key: geo-api.key
+    sync: false
+  - key: captcha.secret
+    sync: false
+  - key: captcha-site.key
+    sync: false
+  - key: ai.key
+    sync: false
+  region: oregon
+  dockerContext: .
+  dockerfilePath: ./Dockerfile
+  autoDeployTrigger: "off"
+version: "1"

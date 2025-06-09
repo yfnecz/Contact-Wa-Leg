@@ -20,5 +20,7 @@ COPY . .
 # Expose port
 EXPOSE 10000
 
+VOLUME ["/data"]
+
 # Run the app
 CMD ["gunicorn", "-b", "0.0.0.0:10000", "app:app"]
