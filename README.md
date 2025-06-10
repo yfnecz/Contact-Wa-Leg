@@ -41,6 +41,16 @@ This is a Flask web application that helps Washington State residents easily con
 
 To build and run with Docker:
 
+You can just pull the image from GitHub Packages:
+
+```sh
+docker pull ghcr.io/yfnecz/contact-wa-leg:latest
+docker run -p 10000:10000 -v /data -v $(pwd)/apikeys:/etc/secrets --rm ghcr.io/yfnecz/contact-wa-leg:latest
+```
+
+Or build it:
+
+
 ```sh
 docker build -t contact-wa-leg:latest .
 docker run -p 10000:10000 -v /data -v $(pwd)/apikeys:/etc/secrets --rm contact-wa-leg:latest
