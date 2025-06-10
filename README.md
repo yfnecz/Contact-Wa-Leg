@@ -39,7 +39,7 @@ This is a Flask web application that helps Washington State residents easily con
 
 ## Docker
 
-To build and run with Docker:
+To build and run with Docker (don't forget to put keys into your local apikeys/ folder):
 
 You can just pull the image from GitHub Packages:
 
