@@ -68,6 +68,15 @@ Shapefiles can be downloaded here (if updated):
 List of legislators can be downloaded here (if update is needed):
 [List of legislators](https://leg.wa.gov/legislators/?activeView=MemberList)
 
+## Example
+
+![Screenshot 2025-06-16 at 11 08 46 AM](https://github.com/user-attachments/assets/25fbf0cc-f20d-47b4-9036-f8ebce85a8c2)
+
+![Screenshot 2025-06-16 at 11 09 02 AM](https://github.com/user-attachments/assets/3a408265-cb47-449d-aec7-fd8085633959)
+
+![Screenshot 2025-06-16 at 11 09 12 AM](https://github.com/user-attachments/assets/ff1eaf35-782d-462f-95db-449e34c0a15a)
+
+
 ---
 
 **Contact:** yfnecz@gmail.com
