@@ -70,12 +70,11 @@ List of legislators can be downloaded here (if update is needed):
 
 ## Example
 
-![Screenshot 2025-06-16 at 11 08 46 AM](https://github.com/user-attachments/assets/25fbf0cc-f20d-47b4-9036-f8ebce85a8c2)
+![Screenshot 2025-06-16 at 11 16 04 AM](https://github.com/user-attachments/assets/c4892763-b4b1-467f-b88c-27fd2ecaad7f)
 
-![Screenshot 2025-06-16 at 11 09 02 AM](https://github.com/user-attachments/assets/3a408265-cb47-449d-aec7-fd8085633959)
+![Screenshot 2025-06-16 at 11 09 02 AM](https://github.com/user-attachments/assets/39496853-cc90-492f-af96-70568114e905)
 
-![Screenshot 2025-06-16 at 11 09 12 AM](https://github.com/user-attachments/assets/ff1eaf35-782d-462f-95db-449e34c0a15a)
-
+![Screenshot 2025-06-16 at 11 16 38 AM](https://github.com/user-attachments/assets/ff5632c5-58fc-43ce-83da-1c69a3328e42)
 
 ---
 
